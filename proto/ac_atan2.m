@@ -22,12 +22,24 @@ function [theta, octant] = ac_atan2(real_part, imag_part)
   
 	x = real_part;
   y = imag_part;
+  absx = 0;
+  absy = 0;
+  
+  if (x < 0)
+    absx = x*-1;
+  endif
+
+  if (y < 0)
+    absy = y*-1;
+  endif
   
   y2 = y*y;
   x2 = x*x;
   
   Q15_PI = 102944;
   Q15_PI_MEDIOS = 51472;
+  Q15_PI_CUARTOS = 25736;
+  Q15_PI_TRESCUARTOS = 77208;
   
   numerador = x * y;
   
@@ -42,23 +54,23 @@ function [theta, octant] = ac_atan2(real_part, imag_part)
     return;
   
   elseif (x == y && x > 0)
-    theta = 25736;
+    theta = Q15_PI_CUARTOS;
     return;
     
   elseif (x == y && x < 0)
-    theta = -77208;
+    theta = -Q15_PI_TRESCUARTOS;
     return;
     
   elseif (x == y*-1 && x < 0)
-    theta = 77208;
+    theta = Q15_PI_TRESCUARTOS;
     return;
     
   elseif (x*-1 == y && y < 0)
-    theta = -25736;
+    theta = -Q15_PI_CUARTOS;
     return;
     
   elseif (x < 0 && y == 0)
-    theta = 102944;
+    theta = Q15_PI;
     return;
     
   elseif (x == 0 && y > 0)
@@ -77,29 +89,25 @@ function [theta, octant] = ac_atan2(real_part, imag_part)
 
   %Sacar el octante
   if (x>0 && y>0)
-    if (x>y)
+    if (x > y)
       octant = 1;
     else
       octant = 2;
     endif
   elseif (x<0 && y>0)
-    x = x *-1;
-    if (x>y)
+    if (absx > y)
       octant = 4;
     else
       octant = 3;
     endif
   elseif (x<0 && y<0)
-    x = x*-1;
-    y = y*-1;
-    if (x>y)
+    if (absx > absy)
       octant = 5;
     else
       octant = 6;
     endif
   else
-    y = y*-1;
-    if (x>y)
+    if (x > absy)
       octant = 8;
     else
       octant = 7;
