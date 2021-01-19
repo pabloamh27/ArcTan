@@ -115,7 +115,7 @@ shr eax, 15
 mov denominador_invertido, eax
 ; ... to here
 
-
+;----------------------------------------------------------------------------------------------------------------------------------------------------
 
 mov eax, x
 mov ebx, -1
@@ -210,6 +210,90 @@ Y_igual_menosX:
 	mov theta, eax
 	ret
 
+
+;----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+mov eax, x
+cmp eax, 0
+je igual_que_cero
+jle X_menor_que_cero
+ja X_mayor_que_cero
+
+igual_que_cero:
+	mov eax, x
+	mov ebx, absy
+	cmp eax, ebx
+	ja octant8
+	jmp octant7
+
+X_mayor_que_cero:
+	mov eax, y
+	cmp eax, 0
+	ja Y_mayor_que_cero1
+
+Y_mayor_que_cero1:
+	mov eax, x
+	mov ebx, y
+	cmp eax, ebx
+	ja octant1
+	jmp octant2
+
+menor_que_cero:
+	mov eax, y
+	cmp eax, 0
+	ja Y_mayor_que_cero2
+	jle Y_menor_que_cero3
+
+Y_mayor_que_cero2:
+	mov eax, absx
+	mov ebx, y
+	cmp eax, ebx
+	ja octant4
+	jmp octant3
+
+Y_menor_que_cero3:
+	mov eax, absx
+	mov ebx, absy
+	cmp eax, ebx
+	ja octant5
+	jmp octant6
+
+;----------------------------------------------------------------------------------------------------------------------------------------------------
+
+octant1:
+	mov octant, 1
+	ret
+
+octant2:
+	mov octant, 2
+	ret
+
+octant3:
+	mov octant, 3
+	ret
+
+octant4:
+	mov octant, 4
+	ret
+
+octant5:
+	mov octant, 5
+	ret
+
+octant6:
+	mov octant, 6
+	ret
+
+octant7:
+	mov octant, 7
+	ret
+
+octant8:
+	mov octant, 8
+	ret
+
+;----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
