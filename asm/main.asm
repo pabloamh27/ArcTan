@@ -116,7 +116,7 @@ mov denominador_invertido, eax
 ; ... to here
 
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
-
+;Get special theta value
 mov eax, x
 mov ebx, -1
 mul ebx
@@ -212,7 +212,7 @@ Y_igual_menosX:
 
 
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
-
+;Get Octant Value
 
 mov eax, x
 cmp eax, 0
@@ -239,7 +239,7 @@ Y_mayor_que_cero1:
 	ja octant1
 	jmp octant2
 
-menor_que_cero:
+X_menor_que_cero:
 	mov eax, y
 	cmp eax, 0
 	ja Y_mayor_que_cero2
@@ -258,8 +258,6 @@ Y_menor_que_cero3:
 	cmp eax, ebx
 	ja octant5
 	jmp octant6
-
-;----------------------------------------------------------------------------------------------------------------------------------------------------
 
 octant1:
 	mov octant, 1
@@ -294,7 +292,72 @@ octant8:
 	ret
 
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
+; Get Theta Value from octant
 
+mov eax, octant
+cmp eax, 1
+je theta1
+mov eax, octant
+cmp eax, 2
+je theta2
+mov eax, octant
+cmp eax, 3
+je theta2
+mov eax, octant
+cmp eax, 4
+je theta3
+mov eax, octant
+cmp eax, 5
+je theta4
+
+mov eax, octant
+cmp eax, 8
+je theta1
+
+jmp theta5
+
+theta1:
+	mov edx, 0
+	mov eax, numerador
+	mov ebx, denominador
+	div ebx
+	mov theta, eax
+theta2:
+	mov edx, 0
+	mov eax, numerador
+	mov ebx, denominador_invertido
+	div ebx
+	mov ecx, Q15_PI_MEDIOS
+	sub ecx, eax
+	mov theta, ecx
+theta3:
+	mov edx, 0
+	mov eax, numerador
+	mov ebx, denominador
+	div ebx
+	mov ecx, Q15_PI
+	add eax, ecx
+	mov theta, eax
+theta4:
+	mov edx, 0
+	mov eax, numerador
+	mov ebx, denominador
+	div ebx
+	mov ecx, Q15_PI
+	mov edx, -1
+	mul edx
+	sub eax, ecx
+	mov theta, eax
+theta5:
+	mov edx, 0
+	mov eax, numerador
+	mov ebx, denominador_invertido
+	div ebx
+	mov ecx, Q15_PI_MEDIOS
+	mov edx, -1
+	mul edx
+	sub ecx, eax
+	mov theta, ecx
 
 
  INVOKE ExitProcess, 0
