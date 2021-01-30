@@ -36,6 +36,8 @@ denominador_invertido DWORD 0  ; Used to save the inverted denominator operation
 PUBLIC ac_atan2
 
 ac_atan2 PROC x:DWORD, y:DWORD ;Start of the atan function 
+;Variables clean and declaration
+
 mov theta, 0
 mov octant, 0
 mov absx, 0
@@ -121,7 +123,7 @@ je X_igual_cero1
 jle X_menor_cero1
 ja X_mayor_cero1
 
-
+;If X coord is equal to 0
  X_igual_cero1:
 	mov eax, y
 	cmp eax, 0
@@ -130,10 +132,12 @@ ja X_mayor_cero1
 	ja Y_mayor_cero1
 	jmp fin
 
+;If Y coord is equal to 0
  Y_igual_cero1:
 	mov theta, -1
 	ret
 
+;If Y coord is less than 0
  Y_menor_cero1:
 	mov eax, Q15_PI_MEDIOS
 	mov edx, -1
@@ -141,21 +145,24 @@ ja X_mayor_cero1
 	mov theta, eax
 	ret
 
+;If Y coord is greater than 0
  Y_mayor_cero1:
 	mov eax, Q15_PI_MEDIOS
 	mov theta, eax
 	ret
 
+;If Y coord is equal to 0
  Y_igual_cero2:
 	mov eax, Q15_PI
 	mov theta, eax 
 	ret
 
+;If Y coord is equal to 0
  Y_igual_cero3:
 	mov theta, 0
 	ret
 
-	
+;If Y coord is equal to X
  X_igual_Y1:
 	mov eax, Q15_PI_TRESCUARTOS
 	mov edx, -1
@@ -163,23 +170,27 @@ ja X_mayor_cero1
 	mov theta, eax
 	ret
 
+;If Y coord is equal to X
  X_igual_Y2:
 	mov eax, Q15_PI_CUARTOS
 	mov theta, eax
 	ret
 	
+;If X coord is less to Y
  X_igual_menosY:
 	mov eax, Q15_PI_TRESCUARTOS
 	mov theta, eax
 	ret
 
+;If Y coord is minor to X
  Y_igual_menosX:
 	mov eax, Q15_PI_CUARTOS
 	mov edx, -1
 	imul edx
 	mov theta, eax
 	ret
-	
+
+;If X coord is less than 0
  X_menor_cero1:
 	mov eax, y
 	cmp eax, 0
@@ -195,6 +206,7 @@ ja X_mayor_cero1
 	je X_igual_menosY
 	jmp fin
 
+;If X coord is greater than 0
  X_mayor_cero1:
 	mov eax, y
 	cmp eax, 0
@@ -221,6 +233,7 @@ je igual_que_cero
 jle X_menor_que_cero
 ja X_mayor_que_cero
 
+;If X coord is equal to 0
  igual_que_cero:
 	mov eax, x
 	mov ebx, absy
@@ -228,11 +241,13 @@ ja X_mayor_que_cero
 	ja octant8
 	jmp octant7
 
+;If X coord is greater than 0
  X_mayor_que_cero:
 	mov eax, y
 	cmp eax, 0
 	ja Y_mayor_que_cero1
 
+;If Y coord is greater than 0
  Y_mayor_que_cero1:
 	mov eax, x
 	mov ebx, y
@@ -240,12 +255,14 @@ ja X_mayor_que_cero
 	ja octant1
 	jmp octant2
 
+;If X coord is less than 0
  X_menor_que_cero:
 	mov eax, y
 	cmp eax, 0
 	jle Y_menor_que_cero3
 	ja Y_mayor_que_cero2
 
+;If Y coord is greater than 0
  Y_mayor_que_cero2:
 	mov eax, absx
 	mov ebx, y
@@ -253,6 +270,7 @@ ja X_mayor_que_cero
 	ja octant4
 	jmp octant3
 
+;If Y coord is less than 0
  Y_menor_que_cero3:
 	mov eax, absx
 	mov ebx, absy
@@ -260,34 +278,42 @@ ja X_mayor_que_cero
 	ja octant5
 	jmp octant6
 
+;Assign octant 1
  octant1:
 	mov octant, 1
 	jmp fin2
 
+;Assign octant 2
  octant2:
 	mov octant, 2
 	jmp fin2
 
+;Assign octant 3
  octant3:
 	mov octant, 3
 	jmp fin2
 
+;Assign octant 4
  octant4:
 	mov octant, 4
 	jmp fin2
 
+;Assign octant 5
  octant5:
 	mov octant, 5
 	jmp fin2
 
+;Assign octant 6
  octant6:
 	mov octant, 6
 	jmp fin2
 
+;Assign octant 7
  octant7:
 	mov octant, 7
 	jmp fin2
 
+;Assign octant 8
  octant8:
 	mov octant, 8
 	jmp fin2
@@ -320,6 +346,7 @@ je theta1
 
 jmp theta5
 
+;Assign theta option 1
  theta1:
 	mov eax, numerador
 	cdq
@@ -328,6 +355,7 @@ jmp theta5
 	mov theta, eax
 	ret
 
+;Assign theta option 2
  theta2:
 	mov eax, numerador
 	cdq
@@ -338,6 +366,7 @@ jmp theta5
 	mov theta, ecx
 	ret
 
+;Assign theta option 3
  theta3:
 	mov eax, numerador
 	cdq
@@ -348,6 +377,7 @@ jmp theta5
 	mov theta, eax
 	ret
 
+;Assign theta option 4
  theta4:
 	mov eax, numerador
 	cdq
@@ -358,6 +388,7 @@ jmp theta5
 	mov theta, eax
 	ret
 
+;Assign theta option 5
  theta5:
 	mov eax, numerador
 	cdq
