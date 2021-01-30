@@ -7,4 +7,4 @@
 
 INCLUDE irvine32.inc
 
-ac_atan2 PROTO, x:DWORD, y:DWORD
+io_functions PROTO
